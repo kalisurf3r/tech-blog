@@ -5,6 +5,12 @@ class Blogs extends Model {}
 
 Blogs.init(
     {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+          },
         title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -15,7 +21,8 @@ Blogs.init(
         }
     },
     {
-        sequelize
+        sequelize,
+        underscored: true,
     }
     );
 

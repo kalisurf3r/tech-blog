@@ -7,19 +7,23 @@ const blogsData = require('./blogsData.json');
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  const users = await Users.bulkCreate(usersData, {
+  const createdUsers = await Users.bulkCreate(usersData, {
     individualHooks: true,
-    returning: true,
+    returning: true, // Ensure you get the created user instances back
   });
 
-  for (const blog of blogsData) {
-    await Blogs.create({
+  // Map user IDs to blogs
+  const updatedBlogsData = blogsData.map((blog, index) => {
+    return {
       ...blog,
-      userId: users[Math.floor(Math.random() * users.length)].id,
-    });
-  }
+      user_id: createdUsers[index % createdUsers.length].id, // Assign user_id from the created users
+    };
+  });
 
+  // Create Blogs with associated user_id
+  await Blogs.bulkCreate(updatedBlogsData);
   process.exit(0);
 };
+
 
 seedDatabase();

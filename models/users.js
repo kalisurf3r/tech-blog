@@ -10,6 +10,12 @@ class Users extends Model {
 
 Users.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
         username: {
         type: DataTypes.STRING,
         allowNull: false
@@ -30,7 +36,8 @@ Users.init(
               return updatedUserData;
             },
           },
-        sequelize
+        sequelize,
+        underscored: true,
     }
     );
 

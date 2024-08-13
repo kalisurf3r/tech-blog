@@ -16,8 +16,7 @@ router.get('/', async (req, res) => {
         const blogs = blogData.map((blog) => blog.get({ plain: true }));
     
         res.render('home', {
-        blogs,
-        logged_in: req.session.logged_in,
+        Blogs: blogs,
         });
     } catch (err) {
         res.status(500).json(err);
@@ -36,7 +35,7 @@ router.get('/', async (req, res) => {
             });
         
             const blogs = blogData.map((blog) => blog.get({ plain: true }));
-        
+        console.log(blogs);
             res.render('home', {
            Blogs: blogs,
             });
@@ -74,5 +73,26 @@ router.get('/login', (req, res) => {
 router.get('/signup', (req, res) => {
         res.render('signup');
 });
+
+router.get('/fullblog/:id', async (req, res) => {
+    try {
+        const blogData = await Blogs.findByPk(req.params.id, {
+        include: [
+            {
+            model: Users,
+            attributes: ['username'],
+            },
+        ],
+        });
+    
+        const blog = blogData.get({ plain: true });
+    
+        res.render('fullblog', {
+        ...blog,
+        });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+    });
 
     module.exports = router;
