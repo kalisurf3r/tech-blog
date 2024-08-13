@@ -24,6 +24,26 @@ router.get('/', async (req, res) => {
     }
     });
 
+    router.get('/home', async (req, res) => {
+        try {
+            const blogData = await Blogs.findAll({
+            include: [
+                {
+                model: Users,
+                attributes: ['username'],
+                },
+            ],
+            });
+        
+            const blogs = blogData.map((blog) => blog.get({ plain: true }));
+        
+            res.render('home', {
+           Blogs: blogs,
+            });
+        } catch (err) {
+            res.status(500).json(err);
+        }
+        });
 
 router.get('/dashboard', withAuth, async (req, res) => {
     try {
