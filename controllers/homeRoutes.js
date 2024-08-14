@@ -95,4 +95,8 @@ router.get('/fullblog/:id', async (req, res) => {
     }
     });
 
+    router.get('/addpost', withAuth, (req, res) => {
+        res.render('addpost');
+    });
+
     module.exports = router;
