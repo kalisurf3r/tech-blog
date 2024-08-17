@@ -1,14 +1,17 @@
 [
     {
         "title": "Blog 1",
-        "content": "This is the first blog post."
+        "content": "This is the first blog post.",
+        "userId": 1
     },
     {
         "title": "Blog 2",
-        "content": "This is the second blog post."
+        "content": "This is the second blog post.",
+        "userId": 2
     },
     {
         "title": "Blog 3",
-        "content": "This is the third blog post."
+        "content": "This is the third blog post.",
+        "userId": 3
     }
 ]

@@ -50,12 +50,14 @@ router.get('/dashboard', withAuth, async (req, res) => {
         attributes: { exclude: ['password'] },
         include: [{ model: Blogs }],
         });
-    
+        
         const user = userData.get({ plain: true });
-    
+        const userBlogs = user.Blogs.map((blog) => blog.get({ plain: true }));
+
         res.render('dash', {
-        ...user,
-        logged_in: true,
+            ...user,
+            Blogs: userBlogs,
+            logged_in: true,
         });
     } catch (err) {
         res.status(500).json(err);
@@ -70,8 +72,20 @@ router.get('/login', (req, res) => {
     res.render('login');
     });
 
+
+router.get('/logout', (req, res) => {
+    if (req.session.logged_in) {
+        req.session.destroy(() => {
+        res.status(204).end();
+        });
+    } else {
+        res.status(404).end();
+    }
+    });
+
 router.get('/signup', (req, res) => {
-        res.render('signup');
+
+    res.render('signup');
 });
 
 router.get('/fullblog/:id', async (req, res) => {
@@ -86,9 +100,10 @@ router.get('/fullblog/:id', async (req, res) => {
         });
     
         const blog = blogData.get({ plain: true });
-    
+        console.log(blog);
         res.render('fullblog', {
         ...blog,
+        logged_in: req.session.logged_in,
         });
     } catch (err) {
         res.status(500).json(err);

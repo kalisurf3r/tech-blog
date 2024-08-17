@@ -1,0 +1,14 @@
+[
+    {
+    "comment": "This is a comment",
+    "blogId": 1
+    },
+    {
+    "comment": "This is another comment",
+    "blogId": 2
+    },
+    {
+    "comment": "This is a third comment",
+    "blogId": 3
+    }
+]

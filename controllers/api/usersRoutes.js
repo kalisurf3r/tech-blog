@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Users } = require('../../models');
 
 // * CREATE new user
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
     try {
         const userData = await Users.create(req.body);
 
@@ -60,5 +60,7 @@ router.post('/logout', (req, res) => {
         res.status(404).end();
     }
 });
+
+
 
 module.exports = router;
